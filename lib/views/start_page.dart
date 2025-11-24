@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'wallet_page.dart';
 
-class StartPage extends StatelessWidget {
+class StartPage extends StatefulWidget {
   const StartPage({super.key});
+
+  @override
+  State<StartPage> createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +88,60 @@ class StartPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'Press start to continue',
+                      'Login to continue',
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
 
-                    // 🟢 Start Button
+                    // Username TextField
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: TextField(
+                        controller: _usernameController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          labelText: 'Username',
+                          labelStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Password TextField
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: TextField(
+                        controller: _passwordController,
+                        style: const TextStyle(color: Colors.white),
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+
+                    // 🟢 Login Button
                     ElevatedButton(
                       onPressed: () {
+                        // TODO: Implement login logic (e.g., validate credentials, authenticate user)
+                        // For now, navigate to wallet page on login
                         Navigator.of(context).pushReplacement(
                           PageRouteBuilder(
                             pageBuilder: (context, animation, secondaryAnimation) => const WalletPage(),
@@ -113,33 +164,29 @@ class StartPage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        'START',
+                        'LOGIN',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
 
-                    // 🔴 Exit Button
-                    ElevatedButton(
+                    // 🔵 Register TextButton
+                    TextButton(
                       onPressed: () {
-                        SystemNavigator.pop();
+                        // TODO: Implement register logic (e.g., navigate to register page or show dialog)
+                        // For now, placeholder - you can add navigation or a dialog here
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Register functionality not implemented yet')),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 110, vertical: 25),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
                       child: const Text(
-                        'EXIT',
+                        'Register',
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.blue,
+                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -151,5 +198,12 @@ class StartPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
